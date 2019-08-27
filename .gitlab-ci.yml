@@ -1,0 +1,23 @@
+stages:
+  - test
+  - deploy
+
+variables:
+  AWS_ACCOUNT_NUMBER: "sdasdadad"
+  AWS_REGION: "eu-central-1"
+  ENVIRONMENT: "stage"
+  NAMESPACE: "default"
+
+test_stack:
+  stage: test
+  variables:
+    NAMESPACE: "test"
+  script: "echo 'This is the build stage'"
+
+deploy_stack:
+  when: manual
+  variables:
+    NAMESPACE: "live"
+  stage: deploy
+  script: "echo 'This is the deploy stage'"
+
