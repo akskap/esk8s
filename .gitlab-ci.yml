@@ -12,7 +12,11 @@ test_stack:
   stage: test
   variables:
     NAMESPACE: "test"
-  script: "echo 'This is the build stage'"
+  script:
+    - kubectl apply -f elasticstack/elasticsearch.yml --namespace=${NAMESPACE}
+    - kubectl apply -f elasticstack/kibana.yml --namespace=${NAMESPACE}
+    - kubectl apply -f elasticstack/filebeat-configmap.yml --namespace=${NAMESPACE}
+    - kubectl apply -f elasticstack/filebeat-daemonset.yml --namespace=${NAMESPACE}
 
 deploy_stack:
   when: manual
