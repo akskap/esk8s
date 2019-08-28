@@ -6,7 +6,6 @@ resource "aws_instance" "esk8s_instance" {
   ami                         = "${var.instance_ami_id}"
   instance_type               = "${var.instance_type}"
   associate_public_ip_address = true
-  tags                        = "${var.instance_tags}"
   subnet_id                   = "${var.instance_subnet_id}"
   vpc_security_group_ids      = ["${aws_security_group.esk8s_instance_sg.id}"]
   user_data                   = "${data.template_file.init.rendered}"
@@ -18,6 +17,14 @@ resource "aws_instance" "esk8s_instance" {
 
   root_block_device {
     volume_size = 200
+  }
+
+  tags = {
+	Name = "esk8s instance"
+	Application = "minikube"
+        Environment = "test"
+        Team = "OMS"
+        Description = "Test instance"
   }
 }
 
