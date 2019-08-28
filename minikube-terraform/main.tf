@@ -39,7 +39,7 @@ resource "aws_security_group_rule" "esk8s_sg_ingress_1" {
   security_group_id = "${aws_security_group.esk8s_instance_sg.id}"
   to_port           = 65535
   type              = "ingress"
-  cidr_blocks       = ["92.218.249.130/32"]
+  cidr_blocks       = ["92.218.249.130/32", "212.121.146.139/32"]
 }
 
 resource "aws_security_group_rule" "esk8s_sg_ingress_2" {

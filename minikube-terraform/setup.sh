@@ -39,5 +39,5 @@ minikube start --vm-driver=none
 useradd --comment 'GitLab Runner' --create-home gitlab-runner --shell /bin/bash
 curl -L --output /usr/bin/gitlab-runner https://gitlab-runner-downloads.s3.amazonaws.com/latest/binaries/gitlab-runner-linux-amd64
 chmod +x /usr/bin/gitlab-runner
-gitlab-runner install --user=gitlab-runner --working-directory=/home/gitlab-runner
+gitlab-runner install --working-directory /home/gitlab-runner --user root
 gitlab-runner start

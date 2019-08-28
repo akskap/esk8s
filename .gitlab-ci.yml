@@ -13,6 +13,7 @@ test_stack:
   variables:
     NAMESPACE: "test"
   script:
+    - kubectl create namespace test || true
     - kubectl apply -f elasticstack/elasticsearch.yml --namespace=${NAMESPACE}
     - kubectl apply -f elasticstack/kibana.yml --namespace=${NAMESPACE}
     - kubectl apply -f elasticstack/filebeat-configmap.yml --namespace=${NAMESPACE}
