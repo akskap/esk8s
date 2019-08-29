@@ -13,6 +13,10 @@ usermod -a -G docker ec2-user
 curl -O https://bootstrap.pypa.io/get-pip.py
 python get-pip.py
 pip install tornado numpy
+mkdir -p /usr/share/elasticsearch/data/nodes
+mkdir -p /mnt/data
+chmod -R 755 /usr/share/elasticsearch/data
+chmod -R 755 /mnt/data 
 
 # Setup gitlab-ci
 docker volume create gitlab_data
