@@ -23,7 +23,7 @@ spec:
         ]
         env:
         - name: ELASTICSEARCH_HOST
-          value: 10.96.42.74
+          value: elasticsearch
         - name: ELASTICSEARCH_PORT
           value: "9200"
         - name: ELASTICSEARCH_USERNAME
