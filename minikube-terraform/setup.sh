@@ -6,7 +6,7 @@ set -e
 
 pushd "/tmp"
 yum update -y
-yum install -y git
+yum install -y git jq
 amazon-linux-extras install docker -y
 service docker start
 usermod -a -G docker ec2-user
