@@ -13,11 +13,7 @@ echo "Creating a temporay index in Elasticsearch : ${random_index_name}"
 curl -X PUT http://${elasticsearch_cluster_ip}:${elasticsearch_cluster_port}/${random_index_name}
 
 echo "Push random log data into index : ${random_index_name}"
-python elasticstack/test/es_test_data.py                                                          \
-    --es-url=http://${elasticsearch_cluster_ip}:${elasticsearch_cluster_port}   \ 
-    --index-name=${random_index_name}                                           \
-    --batch-size=100                                                            \
-    --count=10
+python elasticstack/test/es_test_data.py --es-url="http://${elasticsearch_cluster_ip}:${elasticsearch_cluster_port}" --index-name="${random_index_name}" --batch-size=100 --count=10
 
 sleep 5
 
