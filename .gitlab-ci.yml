@@ -18,7 +18,7 @@ test_stack:
     - kubectl apply -f elasticstack/filebeat-role-binding.yml --namespace=${NAMESPACE}
     - kubectl apply -f elasticstack/filebeat-service-account.yml --namespace=${NAMESPACE}
     - kubectl apply -f elasticstack/filebeat-daemonset.yml --namespace=${NAMESPACE}
-    - test/check_elasticsearch_data_flow
+    - elasticstack/test/check_elasticsearch_data_flow
 
 deploy_stack:
   when: manual
