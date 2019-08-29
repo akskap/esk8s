@@ -3,9 +3,6 @@ stages:
   - deploy
 
 variables:
-  AWS_ACCOUNT_NUMBER: "sdasdadad"
-  AWS_REGION: "eu-central-1"
-  ENVIRONMENT: "stage"
   NAMESPACE: "default"
 
 test_stack:
@@ -13,7 +10,7 @@ test_stack:
   variables:
     NAMESPACE: "test"
   script:
-    - kubectl create namespace test || true
+    - kubectl create namespace ${NAMESPACE} || true
     - kubectl apply -f elasticstack/elasticsearch.yml --namespace=${NAMESPACE}
     - kubectl apply -f elasticstack/kibana.yml --namespace=${NAMESPACE}
     - kubectl apply -f elasticstack/filebeat-configmap.yml --namespace=${NAMESPACE}
