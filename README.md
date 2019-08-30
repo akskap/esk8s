@@ -7,7 +7,7 @@ This repository covers automated provisioning/testing of ElasticStack (*ElasticS
 
 
 ### **Pre-requisites:**
-- Te*rraform should be installed on your local machin*e
+- *Terraform* should be installed on your local machin*e
 - AWS access-key/secret pair
 
 
@@ -44,6 +44,7 @@ This repository covers automated provisioning/testing of ElasticStack (*ElasticS
 git clone https://github.com/akskap/esk8s.git
 ```
 
+
 **2) Provision an EC2 instance on Terraform**
 
 Note: Before triggering terraform, you will have to customize variable values in `minikube-terraform/variables.tf` file, because all defaults may not suit your requirements. Please note that you update your AWS key-pair name and ingress CIDR range to be able to access the instance later.
@@ -58,6 +59,7 @@ This will start provisioning an EC2 instance with security group definition and 
 A cloud-init script is configured as part of EC2 instance creation. This takes care of setting up tools like Gitlab-CE, Docker, Minikube and other system tools etc.
 
 The public dns endpoint / ip-address will allow access to the EC2 instance. At this point if you try to access `http://ec2-xx-xxx-xxx-xxx.eu-central-1.compute.amazonaws.com` in your browser, you will be greeted by Gitlab-CE. Here, you can choose a password for the root user and create a repository that will host the contents of K8S manifests and CI/CI pipeline definition
+
 
 **3) Setup Gitlab Runner**
 Installation of Gitlab Runner is already taken care of in the cloud-init script in EC2. Next, we need to register the runner with the repository that we created in Step 2.
@@ -78,6 +80,7 @@ sudo gitlab-runner register                             \
     --request-concurrency 4
 ```
 
+
 **4) Push code from local machine to the new repository to enable pipeline execution and test**
 
 ```
@@ -88,7 +91,7 @@ git push esk8s master
 Code push will trigger the Gitlab pipeline, run log for which can be seen @ http://ec2-xx-xxx-xxx-xxx.eu-central-1.compute.amazonaws.com/root/<repo_name>/pipelines
 
 
-**5) Run Kibana on local machine**
+**5) Access Kibana on local machine**
 
 In order to run Kibana on local machine, we will be tunnelling the traffic via SSH into the EC2 instance
 Kibana is exposed as a NodePort service on Minikube. First, let's get the Node IP address exposed by Minikube by running a command in the EC2 instance
