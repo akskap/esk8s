@@ -7,7 +7,7 @@ This repository covers automated provisioning/testing of ElasticStack (*ElasticS
 
 
 ### **Pre-requisites:**
-- *Terraform* should be installed on your local machin*e
+- *Terraform* should be installed on your local machine
 - AWS access-key/secret pair
 
 
@@ -47,7 +47,7 @@ git clone https://github.com/akskap/esk8s.git
 
 **2) Provision an EC2 instance on Terraform**
 
-Note: Before triggering terraform, you will have to customize variable values in `minikube-terraform/variables.tf` file, because all defaults may not suit your requirements. Please note that you update your AWS key-pair name and ingress CIDR range to be able to access the instance later.
+**Note**: Before triggering terraform, you will have to customize variable values in `minikube-terraform/variables.tf` file, because all defaults may not suit your requirements. Please note that you update your AWS key-pair name and ingress CIDR range to be able to access the instance later.
 
 Once you have all the values in place, please run:
 ```
@@ -56,12 +56,26 @@ cd minikube-terraform; terraform apply;
 
 This will start provisioning an EC2 instance with security group definition and corresponding ingress/egress rules
 
-A cloud-init script is configured as part of EC2 instance creation. This takes care of setting up tools like Gitlab-CE, Docker, Minikube and other system tools etc.
+A cloud-init script is configured as part of EC2 instance creation. This takes care of setting up tools like:
+- Gitlab-CE 
+- Docker
+- Minikube 
+- Other system tools like jq, git, gitlab-runner etc.
 
-The public dns endpoint / ip-address will allow access to the EC2 instance. At this point if you try to access `http://ec2-xx-xxx-xxx-xxx.eu-central-1.compute.amazonaws.com` in your browser, you will be greeted by Gitlab-CE. Here, you can choose a password for the root user and create a repository that will host the contents of K8S manifests and CI/CI pipeline definition
+Terraform run completes with an output like:
+```
+Apply complete! Resources: 1 added, 0 changed, 1 destroyed.
+
+Outputs:
+
+public_dns = ec2-xx-xxx-xxx-xxx.eu-central-1.compute.amazonaws.com
+public_ip = xx.xxx.xxx.xxx
+```
+The public dns endpoint / ip-address will allow access to the EC2 instance. At this point if you try to access `http://ec2-xx-xxx-xxx-xxx.eu-central-1.compute.amazonaws.com` in your browser, you will be greeted by Gitlab-CE. Here, you can choose a password for the root user and create a repository that will host the contents of K8S manifests and CI/CI pipeline definition in later steps
 
 
 **3) Setup Gitlab Runner**
+
 Installation of Gitlab Runner is already taken care of in the cloud-init script in EC2. Next, we need to register the runner with the repository that we created in Step 2.
 
 Visit `Repository page > Settings > CI/CD > Runners` and note down the details for Runner Registration token and Gitlab URL:
