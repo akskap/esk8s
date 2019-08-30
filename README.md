@@ -31,7 +31,7 @@ This repository covers automated provisioning/testing of ElasticStack (*ElasticS
 
 
 ### Basic Workflow:
-<!-- ![Basic Workflow](https://i.imgur.com/sOSpwx1.png) -->
+![Basic Workflow](https://i.imgur.com/sOSpwx1.png)
 
 
 ## Steps
@@ -66,7 +66,7 @@ ssh -i <path_to_aws_pem_file> ec2-user@ec2-xx-xxx-xxx-xxx.eu-central-1.compute.a
 sudo su
 sudo gitlab-runner register                             \
     --non-interactive                                   \
-    --url "<GITLAB_URL>“                                \
+    --url "<GITLAB_URL>"                                \
     --registration-token "<GITLAB_RUNNER_REG_TOKEN>"    \
     --executor "shell"                                  \
     --description "Runner for esk8s project"            \
@@ -81,14 +81,22 @@ git remote add esk8s http://<ec2-xx-xxx-xxx-xxx.eu-central-1.compute.amazonaws.c
 git push esk8s master
 ```
 
-Once you login into Gitlab-CE, you can now create a test repository which will host the contents for ElasticStack pipeline or K8S deployment manifests.
+Code push will trigger the Gitlab pipeline, run log for which can be seen @ http://ec2-xx-xxx-xxx-xxx.eu-central-1.compute.amazonaws.com/root/<repo_name>/pipelines
 
 
-For sake of simplicity it uses Minikube and also highlights the usage Gitlab Pipelines for basic tests
-This repository contains the entire workflow of setting up Minikube on AWS (with Terraform) and for a CI/CD basemanaging a containerized setup of Elastic Stack on a locally running K8S environment. For the purpose of this experiment, I will use Jenkins, Gitlab, Pipelines (for CI/CD) and last, but not the least, a local setup of Minikube.
+5) Run Kibana on local machine
 
+In order to run Kibana on local machine, we will be tunnelling the traffic via SSH into the EC2 instance
+Kibana is exposed as a NodePort service on Minikube. First, let's get the Node IP address exposed by Minikube by running a command in the EC2 instance
+```
+kubectl get services -o json --namespace=test -l service=kibana | jq -r '.items[0].spec.clusterIP'
+```
+Now, on your local machine, run the following command:
+```
+ssh -N -L 5601:<kibana_cluster_ip>:5601 -i <your_aws_key_pair>.pem ec2-user@ec2-xx-xxx-xxx-xxx.eu-central-1.compute.amazonaws.com
+```
 
-
+Kibana dashboard can now be accessed on your local machine under `http://localhost:5601`
 
 
 
