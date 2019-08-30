@@ -27,6 +27,15 @@ variable "instance_key_name" {
     default = "Trial-pair"
 }
 
+variable "aws_profile_name" {
+    type = "string"
+    default = "onelogin"
+}
+
+variable "aws_region" {
+    type = "string"
+    default = "eu-central-1"
+}
 
 
 

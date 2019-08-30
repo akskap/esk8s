@@ -39,7 +39,7 @@ resource "aws_security_group_rule" "esk8s_sg_ingress_1" {
   security_group_id = "${aws_security_group.esk8s_instance_sg.id}"
   to_port           = 65535
   type              = "ingress"
-  cidr_blocks       = ["92.218.249.130/32", "212.121.146.139/32"]
+  cidr_blocks       = ["92.217.241.16/32", "212.121.146.139/32"]
 }
 
 resource "aws_security_group_rule" "esk8s_sg_ingress_2" {
@@ -61,7 +61,17 @@ resource "aws_security_group_rule" "sg_egress" {
 }
 
 provider "aws" {
-  region  = "eu-central-1"
-  profile = "onelogin"
+  region  = "${var.aws_region}"
+  profile = "${var.aws_profile_name}"
+}
+
+output "public_dns" {
+  value = "${aws_instance.esk8s_instance.public_dns}"
+  description = "Public DNS for the EC2 instance"
+}
+
+output "public_ip" {
+  value = "${aws_instance.esk8s_instance.public_ip}"
+  description = "Public IP for the EC2 instance"
 }
 
