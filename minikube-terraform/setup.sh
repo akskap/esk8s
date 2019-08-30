@@ -26,7 +26,7 @@ chmod -R 777 /mnt/data
 # Setup gitlab-ci
 docker volume create gitlab_data
 external_public_ip="$(curl http://169.254.169.254/latest/meta-data/public-ipv4)"
-echo "external_url 'http://${external_public_ip}'" >> /tmp/gitlab.rb
+echo "external_url 'http://$external_public_ip'" >> /tmp/gitlab.rb
 chmod 777 /tmp/gitlab.rb
 docker run -p 80:80 -p 443:443 -v gitlab_data:/var/opt/gitlab -v /tmp/gitlab.rb:/etc/gitlab/gitlab.rb -d gitlab/gitlab-ce
 sleep 10
